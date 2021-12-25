@@ -1,4 +1,5 @@
 # Geo API
+Simple Rest API written in Java using Spring Boot and Apache Cassandra.
 
 ### Endpoints
 
@@ -19,3 +20,30 @@
 ### Documentation 
    - /swagger-ui
    - /api-docs 
+
+### Development
+
+##### Prerequisites
+Download and install the [JDK](https://www.oracle.com/java/technologies/downloads/)  
+Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), the free and open source distributed version control system.  
+Install [Docker](https://docs.docker.com/get-docker/), an open source containerization platform.
+
+##### Clone the project
+Run `git clone git@github.com:opofa/geo-api.git` to clone the repository from [GitHub](https://github.com/opofa/geo-api).
+
+##### Create a Database
+Register to [DataStax](https://www.datastax.com/) (You can use your GitHub or your Google account).  
+Create a Database for your project.  
+Generate an Application Token for your project.  
+
+##### Create the necessary Environment Variables
+```
+SPRING_DATA_CASSANDRA_KEYSPACE-NAME=<keyspace>
+SPRING_DATA_CASSANDRA_USERNAME=<username>
+SPRING_DATA_CASSANDRA_PASSWORD=<password>
+
+ASTRA_DB_ID=<db_id>
+ASTRA_DB_REGION=<region>
+ASTRA_DB_KEYSPACE=<keyspace>
+ASTRA_DB_APPLICATION_TOKEN=<app_token>
+```

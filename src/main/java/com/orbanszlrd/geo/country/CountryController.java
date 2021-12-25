@@ -43,7 +43,7 @@ public class CountryController {
 
     @GetMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Find a country", description = "Find a country by its id")
-    public EntityModel<Country> findById(@Parameter(description = "The id of the country", required = true, example = "1") @PathVariable UUID id) {
+    public EntityModel<Country> findById(@Parameter(description = "The id of the country", required = true, example = "00000000-0000-0000-0000-000000000000") @PathVariable UUID id) {
         log.info("Find a country by its id: {}", id);
         Country country = countryService.findById(id);
         return countryModelAssembler.toModel(country);
@@ -60,7 +60,7 @@ public class CountryController {
 
     @PutMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Update a country", description = "Update a country by its id")
-    public EntityModel<Country> update(@Parameter(description = "The id of the country", required = true, example = "1") @PathVariable UUID id, @Valid @RequestBody SaveCountryCommand saveCountryCommand) {
+    public EntityModel<Country> update(@Parameter(description = "The id of the country", required = true, example = "00000000-0000-0000-0000-000000000000") @PathVariable UUID id, @Valid @RequestBody SaveCountryCommand saveCountryCommand) {
         log.info("Update a country by its id: {}", id);
         Country country = countryService.update(id, saveCountryCommand);
         return countryModelAssembler.toModel(country);
@@ -69,7 +69,7 @@ public class CountryController {
     @DeleteMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Delete a country", description = "Delete a country by its id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@Parameter(description = "The id of the country", required = true, example = "252") @PathVariable UUID id) {
+    public void deleteById(@Parameter(description = "The id of the country", required = true, example = "00000000-0000-0000-0000-000000000000") @PathVariable UUID id) {
         log.info("Delete a country by its id: {}", id);
         countryService.deleteById(id);
     }
