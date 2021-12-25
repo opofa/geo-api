@@ -26,7 +26,6 @@ Simple Rest API written in Java using Spring Boot and Apache Cassandra.
 ##### Prerequisites
 Download and install the [JDK](https://www.oracle.com/java/technologies/downloads/)  
 Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), the free and open source distributed version control system.  
-Install [Docker](https://docs.docker.com/get-docker/), an open source containerization platform.
 
 ##### Clone the project
 Run `git clone git@github.com:opofa/geo-api.git` to clone the repository from [GitHub](https://github.com/opofa/geo-api).
