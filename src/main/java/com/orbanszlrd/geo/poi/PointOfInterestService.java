@@ -33,8 +33,7 @@ public class PointOfInterestService {
     public PointOfInterestDto update(UUID id, SavePointOfInterestCommand savePointOfInterestCommand) {
         PointOfInterest oldPointOfInterest = pointOfInterestRepository.findById(id).orElseThrow(() -> new PointOfInterestNotFoundException(id));
         PointOfInterest pointOfInterest = modelMapper.map(savePointOfInterestCommand, PointOfInterest.class);
-        pointOfInterest.setId(id);
-        pointOfInterest.setCreateDate(oldPointOfInterest.getCreateDate());
+        pointOfInterest.setId(oldPointOfInterest.getId());
 
         pointOfInterest = pointOfInterestRepository.save(pointOfInterest);
 

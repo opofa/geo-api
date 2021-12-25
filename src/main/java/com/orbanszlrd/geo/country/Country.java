@@ -4,19 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -62,14 +58,6 @@ public class Country {
 
     @CassandraType(type= CassandraType.Name.VARCHAR)
     private String flag;
-
-    @CreationTimestamp
-    @CassandraType(type= CassandraType.Name.TIMESTAMP)
-    private Date createDate;
-
-    @UpdateTimestamp
-    @CassandraType(type= CassandraType.Name.TIMESTAMP)
-    private Date updateDate;
 
     public Country(String name) {
         this.name = name;

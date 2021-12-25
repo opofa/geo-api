@@ -26,8 +26,7 @@ public class CountryService {
     public Country update(UUID id, SaveCountryCommand saveCountryCommand) {
         Country oldCountry = findById(id);
         Country country = modelMapper.map(saveCountryCommand, Country.class);
-        country.setId(id);
-        country.setCreateDate(oldCountry.getCreateDate());
+        country.setId(oldCountry.getId());
         return countryRepository.save(country);
     }
 

@@ -3,8 +3,6 @@ package com.orbanszlrd.geo.poi;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
@@ -53,14 +51,6 @@ public class PointOfInterest {
 
     @CassandraType(type = CassandraType.Name.FLOAT)
     private Float altitude;
-
-    @CreationTimestamp
-    @CassandraType(type = CassandraType.Name.TIMESTAMP)
-    private Date createDate;
-
-    @UpdateTimestamp
-    @CassandraType(type = CassandraType.Name.TIMESTAMP)
-    private Date updateDate;
 
     public PointOfInterest(UUID id, String name, String countryName) {
         this.id = id;
