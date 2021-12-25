@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -14,16 +13,19 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class SavePointOfInterestCommand {
     @NotBlank
-    @Size(min = 2, max = 100)
+    @Size(min = 2, max = 255)
     @Schema(description = "The name of the poi", example = "Budapest", required = true)
     private String name;
 
-    @Schema(description = "The type of the POI", example = "SETTLEMENT", required = true)
-    private PoiType type;
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Schema(description = "The type of the poi", example = "Settlement", required = true)
+    private String type;
 
-    @NotNull
-    @Schema(description = "The id of the country", example = "102", required = true)
-    private Long countryId;
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Schema(description = "The name of the country", example = "Hungary", required = true)
+    private String countryName;
 
     @Schema(description = "The latitude of the poi", example = "47.497913", required = true)
     private Float latitude;

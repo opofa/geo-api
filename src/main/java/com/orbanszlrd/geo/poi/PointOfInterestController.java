@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -42,7 +42,7 @@ public class PointOfInterestController {
 
     @GetMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Find a POI", description = "Find a POI by its id")
-    public EntityModel<PointOfInterestDto> findById(@Parameter(description = "The id of the POI", required = true, example = "1") @Min(1) @PathVariable Long id) {
+    public EntityModel<PointOfInterestDto> findById(@Parameter(description = "The id of the POI", required = true, example = "1") @PathVariable UUID id) {
         log.info("Find a POI by its id: {}", id);
         PointOfInterestDto pointOfInterestDto = pointOfInterestService.findById(id);
         return pointOfInterestModelAssembler.toModel(pointOfInterestDto);
@@ -59,7 +59,7 @@ public class PointOfInterestController {
 
     @PutMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Update a POI", description = "Update a POI by its id")
-    public EntityModel<PointOfInterestDto> update(@Parameter(description = "The id of the POI", required = true, example = "1") @Min(1) @PathVariable Long id, @Valid @RequestBody SavePointOfInterestCommand savePointOfInterestCommand) {
+    public EntityModel<PointOfInterestDto> update(@Parameter(description = "The id of the POI", required = true, example = "1") @PathVariable UUID id, @Valid @RequestBody SavePointOfInterestCommand savePointOfInterestCommand) {
         log.info("Update a POI by its id: {}", id);
         PointOfInterestDto pointOfInterestDto = pointOfInterestService.update(id, savePointOfInterestCommand);
         return pointOfInterestModelAssembler.toModel(pointOfInterestDto);
@@ -68,7 +68,7 @@ public class PointOfInterestController {
     @DeleteMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Delete a POI", description = "Delete a POI by its id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@Parameter(description = "The id of the POI", required = true, example = "1") @Min(1) @PathVariable Long id) {
+    public void deleteById(@Parameter(description = "The id of the POI", required = true, example = "1") @PathVariable UUID id) {
         log.info("Delete a POI by its id: {}", id);
         pointOfInterestService.deleteById(id);
     }

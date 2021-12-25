@@ -1,64 +1,71 @@
 package com.orbanszlrd.geo.poi;
 
-import com.orbanszlrd.geo.country.Country;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.CassandraType;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
+
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Table(value = "poi")
 public class PointOfInterest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @CassandraType(type = CassandraType.Name.UUID)
+    private UUID id;
 
     @NotBlank
     @Size(min = 2, max = 255)
-    @Column(unique = true, nullable = false, length = 255)
+    @CassandraType(type = CassandraType.Name.VARCHAR)
     private String name;
 
-    @NotNull
-    private PoiType type;
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @CassandraType(type = CassandraType.Name.VARCHAR)
+    private String type;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @NotNull
-    private Country country;
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Column("country_name")
+    @CassandraType(type = CassandraType.Name.VARCHAR)
+    private String countryName;
 
+    @CassandraType(type = CassandraType.Name.FLOAT)
     private Float latitude;
 
+    @CassandraType(type = CassandraType.Name.FLOAT)
     private Float longitude;
 
+    @CassandraType(type = CassandraType.Name.FLOAT)
     private Float altitude;
 
     @CreationTimestamp
-    @Column(nullable = false)
+    @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private Date createDate;
 
     @UpdateTimestamp
-    @Column(nullable = false)
+    @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private Date updateDate;
 
-    public PointOfInterest(String name, PoiType type, Country country) {
+    public PointOfInterest(UUID id, String name, String countryName) {
+        this.id = id;
         this.name = name;
-        this.type = type;
-        this.country = country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-        country.addPointOfInterest(this);
+        this.countryName = countryName;
     }
 
     @Override
@@ -66,16 +73,16 @@ public class PointOfInterest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PointOfInterest that = (PointOfInterest) o;
-        return name.equals(that.name) && country.equals(that.country);
+        return name.equals(that.name) && countryName.equals(that.countryName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, country.getName());
+        return Objects.hash(name, countryName);
     }
 
     @Override
     public String toString() {
-        return name + " (" + country + ")";
+        return name + "(" + countryName + ")";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +24,14 @@ public class PointOfInterestService {
     }
 
     public PointOfInterestDto add(SavePointOfInterestCommand savePointOfInterestCommand) {
-        PointOfInterest pointOfInterest =  pointOfInterestRepository.save(modelMapper.map(savePointOfInterestCommand, PointOfInterest.class));
+        PointOfInterest pointOfInterest =  modelMapper.map(savePointOfInterestCommand, PointOfInterest.class);
+        pointOfInterest.setId(UUID.randomUUID());
+        pointOfInterestRepository.save(pointOfInterest);
         return modelMapper.map(pointOfInterest, PointOfInterestDto.class);
     }
 
-    public PointOfInterestDto update(Long id, SavePointOfInterestCommand savePointOfInterestCommand) {
-        PointOfInterest oldPointOfInterest = pointOfInterestRepository.findById(id).orElseThrow(() -> new PointOfInterestNotFoundException(id));;
+    public PointOfInterestDto update(UUID id, SavePointOfInterestCommand savePointOfInterestCommand) {
+        PointOfInterest oldPointOfInterest = pointOfInterestRepository.findById(id).orElseThrow(() -> new PointOfInterestNotFoundException(id));
         PointOfInterest pointOfInterest = modelMapper.map(savePointOfInterestCommand, PointOfInterest.class);
         pointOfInterest.setId(id);
         pointOfInterest.setCreateDate(oldPointOfInterest.getCreateDate());
@@ -38,12 +41,12 @@ public class PointOfInterestService {
         return modelMapper.map(pointOfInterest, PointOfInterestDto.class);
     }
 
-    public PointOfInterestDto findById(Long id) {
+    public PointOfInterestDto findById(UUID id) {
         PointOfInterest pointOfInterest = pointOfInterestRepository.findById(id).orElseThrow(() -> new PointOfInterestNotFoundException(id));
         return modelMapper.map(pointOfInterest, PointOfInterestDto.class);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
         pointOfInterestRepository.deleteById(id);
     }
 }

@@ -2,11 +2,13 @@ package com.orbanszlrd.geo.poi;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class PointOfInterestDto {
-    private Long id;
+    private UUID id;
     private String name;
-    private PoiType type;
+    private String type;
     private String countryName;
     private Float latitude;
     private Float longitude;

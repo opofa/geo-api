@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -42,7 +43,7 @@ public class CountryController {
 
     @GetMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Find a country", description = "Find a country by its id")
-    public EntityModel<Country> findById(@Parameter(description = "The id of the country", required = true, example = "1") @Min(1) @PathVariable Long id) {
+    public EntityModel<Country> findById(@Parameter(description = "The id of the country", required = true, example = "1") @PathVariable UUID id) {
         log.info("Find a country by its id: {}", id);
         Country country = countryService.findById(id);
         return countryModelAssembler.toModel(country);
@@ -59,7 +60,7 @@ public class CountryController {
 
     @PutMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Update a country", description = "Update a country by its id")
-    public EntityModel<Country> update(@Parameter(description = "The id of the country", required = true, example = "1") @Min(1) @PathVariable Long id, @Valid @RequestBody SaveCountryCommand saveCountryCommand) {
+    public EntityModel<Country> update(@Parameter(description = "The id of the country", required = true, example = "1") @PathVariable UUID id, @Valid @RequestBody SaveCountryCommand saveCountryCommand) {
         log.info("Update a country by its id: {}", id);
         Country country = countryService.update(id, saveCountryCommand);
         return countryModelAssembler.toModel(country);
@@ -68,7 +69,7 @@ public class CountryController {
     @DeleteMapping(value = "/{id}", produces = {"application/hal+json"})
     @Operation(summary = "Delete a country", description = "Delete a country by its id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@Parameter(description = "The id of the country", required = true, example = "252") @Min(1) @PathVariable Long id) {
+    public void deleteById(@Parameter(description = "The id of the country", required = true, example = "252") @PathVariable UUID id) {
         log.info("Delete a country by its id: {}", id);
         countryService.deleteById(id);
     }
